@@ -1,0 +1,59 @@
+#!perl
+
+use strict;
+use warnings FATAL => 'all';
+use Data::Dumper;
+use Abills::Base qw(_bp);
+use Service_price::db::Service_price_add;
+our ($db, $admin, %info, %conf, %lang, $html,);
+
+my $Service_price = Service_price::db::Service_price_add->new($db, $admin, \%conf);
+#**********************************************************
+=head2 service_price_add() - Add headers and items to DB 
+
+  Arguments:
+     
+  Returns:
+    true
+=cut
+#**********************************************************
+sub service_price_add {
+  my $show_template1 = $FORM{header_form} || 0;
+  $Service_price->{ACTION}     = 'add_header';
+  $Service_price->{LNG_ACTION} = $lang{ADD};
+
+  if ($FORM{add_header}) {
+    $Service_price->header_add({%FORM});
+    if (!$Service_price->{errno}) {
+      $html->message('info', $lang{INFO}, $lang{ADDED});
+    }
+  }
+  $html->tpl_show(_include('service_price_add', 'Service_price'), $Service_price);
+
+
+   my $show_template2 = $FORM{item_form} || 0;
+  $Service_price->{ACTION}     = 'add';
+  $Service_price->{LNG_ACTION} = $lang{ADD};
+
+  if ($FORM{add}) {
+    $Service_price->item_add({%FORM});
+    if (!$Service_price->{errno}) {
+      $html->message('info', $lang{INFO}, $lang{ADDED});
+    }
+  }
+   my $header_select = $html->form_select(
+    'HEADER_ID',
+    {
+      SELECTED => $FORM{HEADER_ID} || q{},
+      SEL_LIST  => $Service_price->get_header({ COLS_NAME => 1 }),
+      SEL_KEY   => 'id',
+      SEL_VALUE => 'header_name'
+    }
+  );
+   $html->tpl_show(_include('service_price_add_items', 'Service_price'), { HEADER_SELECT => $header_select, %$Service_price});
+  
+  return 1;
+}
+
+1;
+
