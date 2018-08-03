@@ -12,7 +12,8 @@ abills/libexec/config.pl
 Для створення таблиць в базі виконати команду:
 
  chmod +x /usr/abills/Abills/modules/Service_price/db/Service_price.sql
- mysql --default-character-set=utf8 -D abills < /usr/abills/Abills/modules/Service_price/db/Service_price.sql -p
+ 
+ mysql --default-character-set=utf8 -D abills < \ /usr/abills/Abills/modules/Service_price/db/Service_price.sql -p
 
 Створити ссилку на service_price.cgi:
 
@@ -22,3 +23,4 @@ abills/libexec/config.pl
 Післе включення модуля в інтерфейсі адміністратора появляється меню:
 
 / Логін/ Додавання прайсу ABillS/ - для додавання прайсу в базу.
+
