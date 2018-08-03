@@ -13,7 +13,7 @@ abills/libexec/config.pl
 
  chmod +x /usr/abills/Abills/modules/Service_price/db/Service_price.sql
  
- mysql --default-character-set=utf8 -D abills < \ /usr/abills/Abills/modules/Service_price/db/Service_price.sql -p
+ mysql --default-character-set=utf8 -D abills < /usr/abills/Abills/modules/Service_price/db/Service_price.sql -p
 
 Створити ссилку на service_price.cgi:
 
